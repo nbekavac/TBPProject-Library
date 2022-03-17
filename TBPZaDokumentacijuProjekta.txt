@@ -1,0 +1,89 @@
+CREATE TYPE address_info AS(
+	city_name VARCHAR(50), 
+	street_name VARCHAR(50), 
+	street_number INT4, 
+	postal_number INT4 );
+
+CREATE TYPE gender_info AS ENUM( 'M' , 'F');
+
+CREATE TYPE status AS ENUM('blokiran' , 'nije na vezi', 'na vezi');
+
+CREATE TYPE role_info AS ENUM('U' , 'A' , 'E');
+
+CREATE TABLE "author" (
+	"author_id" SERIAL NOT NULL, 
+	"fname" VARCHAR(30) NOT NULL,
+	"lname" VARCHAR(30) NOT NULL, 
+	"date_of_birth" DATE NOT NULL, 
+	"gender" gender_info NOT NULL, 
+	PRIMARY KEY("author_id"));
+
+CREATE TABLE "users"(
+	"user_id" SERIAL NOT NULL, 
+	"role_id" INT4 NOT NULL, 
+	"username" VARCHAR(30) NOT NULL, 
+	"password" VARCHAR(30) NOT NULL, 
+	"email" VARCHAR(64) NOT NULL, 
+	"address" address_info NOT NULL, 
+	"user_status" status NOT NULL,
+	 PRIMARY KEY("user_id"))
+	INHERITS(author);
+
+CREATE TABLE "book"(
+	"book_id" SERIAL NOT NULL, 
+	"author_id" int4 NOT NULL, 
+	"title" TEXT NOT NULL, 
+	"release_year" INT4 NOT NULL, 
+	"genre" VARCHAR(30) NOT NULL, 
+	PRIMARY KEY("book_id"));
+
+CREATE TABLE "role"
+	("role_id" SERIAL NOT NULL, 
+	"role_name" role_info NOT NULL, 
+	PRIMARY KEY("role_id"));
+
+CREATE TABLE "user_book"
+	("user_book_id" SERIAL NOT NULL, 
+	"user_id" INT4 NOT NULL, 
+	"book_id" INT4 NOT NULL, 
+	"date_borrowed" DATE, 
+	"date_due" DATE, 
+	PRIMARY KEY("user_book_id"));
+
+ALTER TABLE "users" 
+ADD CONSTRAINT "Ref_user_to_role" 
+FOREIGN KEY("role_id") 
+REFERENCES "role"("role_id") 
+MATCH SIMPLE 
+ON DELETE RESTRICT 
+ON UPDATE CASCADE NOT DEFERRABLE;
+
+ALTER TABLE "book" 
+ADD CONSTRAINT "Ref_book_to_author" 
+FOREIGN KEY ("author_id") 
+REFERENCES "author"("author_id") 
+MATCH SIMPLE 
+ON DELETE RESTRICT 
+ON UPDATE CASCADE
+NOT DEFERRABLE;
+
+ALTER TABLE "user_book" 
+ADD CONSTRAINT "Ref_user_book_to_user" 
+FOREIGN KEY("user_id") 
+REFERENCES "users"("user_id") 
+MATCH SIMPLE 
+ON DELETE RESTRICT 
+ON UPDATE CASCADE 
+NOT DEFERRABLE;
+
+INSERT INTO author VALUES(DEFAULT, 'Miroslav', 'Krleza', '1915-05-12' , 'M');
+
+INSERT INTO users VALUES(DEFAULT,'Employee','Employee','1992-11-15','M',DEFAULT,2,'employee','employee','employee@foi.hr',ROW('Varazdin','Pavlinska',2,40000),'nije na vezi');
+
+INSERT INTO book VALUES(DEFAULT, 2,'Segrt Hlapic',1856,'roman');
+
+INSERT INTO role VALUES(DEFAULT, 'A');
+
+INSERT INTO user_book VALUES(DEFAULT,3,1,'2021-02-04','2021-04-04');
+
+
