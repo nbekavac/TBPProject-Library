@@ -1,2 +1,7 @@
-# TBPProjekt- knjiznica
- Projekt rađen za potrebe kolegija Teorija baza podataka(01/2021). Riječ je o jednostavnoj aplikaciji za posudbu knjiga. U pdf dokumentu se može pronaći detaljna dokumentacija
+# TBPProject- Library
+
+ Project for college purposes(01/2021). Simple application for book lending. Detail documentation can be found in .pdf file, it is written in Croatian language.
+ Main requirements :
+ 1.)Usage of object-relational and generalized relational databases
+ 2.)Able to manage multiple user roles(administrator, moderator, registered user, unregistered user)
+ 
