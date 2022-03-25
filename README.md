@@ -1,6 +1,6 @@
 # TBPProject- Library
 
- Project for college purposes (01/2021). Simple application for book lending. Detail documentation can be found in .pdf file, it is written in Croatian language.\
+ Project for college purposes (01/2021). Simple application for book lending. Detail documentation can be found in .pdf file, it is written in Croatian.\
  <br>
  Main requirements :
  <ul>
